@@ -44,7 +44,11 @@ export async function signUpAction(data: FormData) {
     if (err instanceof HTTPError) {
       const { message } = await err.response.json()
 
-      return { success: false, message, errors: null }
+      return {
+        success: false,
+        message: message,
+        errors: null,
+      }
     }
 
     console.error(err)

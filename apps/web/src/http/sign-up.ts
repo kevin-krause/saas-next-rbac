@@ -14,6 +14,9 @@ export async function signUp({
   password,
 }: SignUpRequest): Promise<SignUpResponse> {
   await api.post('users', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     json: {
       name,
       email,
