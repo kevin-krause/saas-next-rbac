@@ -22,6 +22,12 @@ model User {
   member_on          Member[]
   owns_organizations Organization[]
   owns_projects      Project[]
+  comments           Comment[]
+
+  reportedTasks Task[]    @relation("ReportedTasks")
+  assignedTasks Task[]    @relation("AssignedTasks")
+  mentions      Mention[] @relation("MentionedUser")
+  subProjects SubProject[]
 
   @@map("users")
 }
@@ -129,5 +135,83 @@ model Project {
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId String @map("owner_id")
 
+  tasks Task[]
+  subProjects SubProject[]
+
   @@map("projects")
+}
+
+model SubProject {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  slug        String   @map("projects")
+  avatarUrl   String?  @map("avatar_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String  @map("project_id")  
+  
+  organizationId String       @map("organization_id")
+
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId String @map("owner_id")
+
+  tasks Task[]
+
+  @@map("subProjects")
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  eta         DateTime?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String  @map("project_id")
+
+  reporter   User   @relation("ReportedTasks", fields: [reporterId], references: [id])
+  reporterId String @map("reporter_id")
+
+  assignee   User?   @relation("AssignedTasks", fields: [assigneeId], references: [id])
+  assigneeId String? @map("assignee_id")
+
+  comments Comment[]
+  subProjects SubProject[]
+
+
+  @@map("tasks")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId String @map("task_id")
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @map("author_id")
+
+  mention Mention[]
+
+  @@map("comments")
+}
+
+model Mention {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String  @map("comment_id")
+
+  mentionedUser   User   @relation("MentionedUser", fields: [mentionedUserId], references: [id])
+  mentionedUserId String @map("mentioned_user_id")
+
+  @@map("mentions")
 }

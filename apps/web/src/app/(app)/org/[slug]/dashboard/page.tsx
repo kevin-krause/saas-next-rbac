@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ability, getCurrentOrg } from '@/auth/auth'
 import { Button } from '@/components/ui/button'
 
-import { ProjectList } from './project-list'
+import DashboardView from '@/app/(app)/org/[slug]/dashboard/dashboard'
 
 export default async function Projects() {
   const currentOrg = getCurrentOrg()
@@ -12,20 +12,10 @@ export default async function Projects() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Processos</h1>
-        {permissions?.can('create', 'Project') && (
-          <Button size="sm" asChild>
-            <Link href={`/org/${currentOrg}/create-project`}>
-              <Plus className="mr-2 size-4" />
-              Criar Processo
-            </Link>
-          </Button>
-        )}
-      </div>
+      <div className="flex items-center justify-between"></div>
 
       {permissions?.can('get', 'Project') ? (
-        <ProjectList />
+        <DashboardView />
       ) : (
         <p className="text-sm text-muted-foreground">
           You are not allowed to see organization projects.
