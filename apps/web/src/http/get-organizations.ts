@@ -1,6 +1,6 @@
 import { api } from './api-client'
 
-interface GetOrganizationsResponse {
+export interface GetOrganizationsResponse {
   organizations: {
     id: string
     name: string

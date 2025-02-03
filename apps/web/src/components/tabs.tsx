@@ -24,7 +24,18 @@ export async function Tabs() {
             size="sm"
             className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
           >
-            <NavLink href={`/org/${currentOrg}`}>Projects</NavLink>
+            <NavLink href={`/org/${currentOrg}`}>Projects Manager</NavLink>
+          </Button>
+        )}
+
+        {canGetProjects && (
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+          >
+            <NavLink href={`/org/${currentOrg}/dashboard`}>Dashboard</NavLink>
           </Button>
         )}
 

@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 
-function getInitials(name: string): string {
+export function getInitials(name: string): string {
   const initials = name
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase())

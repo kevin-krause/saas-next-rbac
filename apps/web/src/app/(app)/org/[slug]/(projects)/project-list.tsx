@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { ArrowRight } from 'lucide-react'
-
 import { getCurrentOrg } from '@/auth/auth'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -13,6 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { getProjects } from '@/http/get-projects'
+import Link from 'next/link'
 
 dayjs.extend(relativeTime)
 
@@ -49,7 +49,9 @@ export async function ProjectList() {
               </span>
 
               <Button size="xs" variant="outline" className="ml-auto">
-                View <ArrowRight className="ml-2 size-3" />
+                <Link href={`${currentOrg}/${project.slug}`}>
+                  View <ArrowRight className="ml-2 size-3" />
+                </Link>
               </Button>
             </CardFooter>
           </Card>

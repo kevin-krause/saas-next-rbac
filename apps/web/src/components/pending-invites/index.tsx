@@ -3,7 +3,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { Check, UserPlus2, X } from 'lucide-react'
+import { Check, BellDot, X } from 'lucide-react'
 import { useState } from 'react'
 
 import { getPendingInvites } from '@/http/get-pending-invites'
@@ -40,7 +40,7 @@ export function PendingInvites() {
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button size="icon" variant="ghost">
-          <UserPlus2 className="size-4" />
+          <BellDot className="size-4" />
           <span className="sr-only">Pending invites</span>
         </Button>
       </PopoverTrigger>
